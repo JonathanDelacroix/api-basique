@@ -55,11 +55,15 @@ class BookController extends Controller
 
         $book->update($validated);
 
+        Cache::forget('book_' . $book->id);
+
         return new BookResource($book);
     }
 
     public function destroy(Book $book)
     {
+        Cache::forget('book_' . $book->id);
+
         $book->delete();
 
         return response()->noContent();
